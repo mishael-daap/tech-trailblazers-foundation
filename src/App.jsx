@@ -3,7 +3,7 @@ import Home from './pages/Home';
 import About from './pages/About';
 import Gallery from './pages/Gallery';
 import Contact from './pages/Contact';
-import Programs from './pages/Programs';
+import Events from './pages/Events';
 import Resources from './pages/Resources';
 import { Navigation } from './components/Navigation';
 
@@ -36,8 +36,8 @@ const router = createBrowserRouter([
         element: <Contact />,
       },
       {
-        path: "programs",
-        element: <Programs />,
+        path: "events",
+        element: <Events />,
       },
       {
         path: "resources",

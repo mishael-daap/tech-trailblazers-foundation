@@ -1,6 +1,7 @@
 import { Menu, X } from 'lucide-react';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import logo from '../assets/logo.jpeg';
 
 export function Navigation() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -9,9 +10,7 @@ export function Navigation() {
     <nav className="relative z-10 px-6 py-6 lg:px-12 bg-white">
       <div className="max-w-7xl mx-auto flex items-center justify-between">
         <Link to="/" className="flex items-center gap-3">
-          <span className="font-serif text-xl md:text-2xl text-gray-900" style={{ fontFamily: 'Lora, serif' }}>
-            Tech Trailblazers
-          </span>
+          <img src={logo} alt="Tech Trailblazers logo" className="h-12 w-auto" />
         </Link>
 
         {/* Desktop Navigation */}
@@ -19,8 +18,8 @@ export function Navigation() {
           <Link to="/about" className="text-gray-700 hover:text-gray-900 transition-colors text-sm">
             About
           </Link>
-          <Link to="/programs" className="text-gray-700 hover:text-gray-900 transition-colors text-sm">
-            Programs
+          <Link to="/events" className="text-gray-700 hover:text-gray-900 transition-colors text-sm">
+            Events
           </Link>
           <Link to="/resources" className="text-gray-700 hover:text-gray-900 transition-colors text-sm">
             Resources
@@ -52,8 +51,8 @@ export function Navigation() {
             <Link to="/about" className="text-gray-700 hover:text-gray-900 transition-colors py-2">
               About
             </Link>
-            <Link to="/programs" className="text-gray-700 hover:text-gray-900 transition-colors py-2">
-              Programs
+            <Link to="/events" className="text-gray-700 hover:text-gray-900 transition-colors py-2">
+              Events
             </Link>
             <Link to="/resources" className="text-gray-700 hover:text-gray-900 transition-colors py-2">
               Resources
