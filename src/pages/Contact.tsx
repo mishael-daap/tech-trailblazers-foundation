@@ -1,8 +1,19 @@
 import { Footer } from '../components/Footer';
 import { Mail, Phone, MapPin, Send, CheckCircle, Loader2 } from 'lucide-react';
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import type { ChangeEvent, FormEvent } from 'react';
 import emailjs from '@emailjs/browser';
+
+// Turnstile types
+declare global {
+  interface Window {
+    turnstile?: {
+      render: (container: string | HTMLElement, options: Record<string, unknown>) => string;
+      reset: (widgetId: string) => void;
+      remove: (widgetId: string) => void;
+    };
+  }
+}
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -13,6 +24,57 @@ export default function Contact() {
   const [isLoading, setIsLoading] = useState(false);
   const [status, setStatus] = useState<'idle' | 'success' | 'error'>('idle');
   const [statusMessage, setStatusMessage] = useState('');
+  const [turnstileToken, setTurnstileToken] = useState('');
+  const turnstileWidgetId = useRef<string | null>(null);
+  const turnstileContainerRef = useRef<HTMLDivElement>(null);
+
+  // Cloudflare Turnstile Site Key from environment variables
+  const TURNSTILE_SITE_KEY = import.meta.env.VITE_TURNSTILE_SITE_KEY || '';
+
+  // Load Turnstile script
+  useEffect(() => {
+    if (!TURNSTILE_SITE_KEY || !turnstileContainerRef.current) return;
+
+    const loadTurnstile = () => {
+      if (window.turnstile && turnstileContainerRef.current) {
+        // Remove existing widget if any
+        if (turnstileWidgetId.current) {
+          window.turnstile.remove(turnstileWidgetId.current);
+        }
+        // Render new widget
+        turnstileWidgetId.current = window.turnstile.render(turnstileContainerRef.current, {
+          sitekey: TURNSTILE_SITE_KEY,
+          theme: 'light',
+          callback: (token: string) => {
+            setTurnstileToken(token);
+          },
+          'expired-callback': () => {
+            setTurnstileToken('');
+          },
+        });
+      }
+    };
+
+    // Check if script already loaded
+    if (document.querySelector('script[src*="challenges.cloudflare.com/turnstile"]')) {
+      loadTurnstile();
+      return;
+    }
+
+    // Load Turnstile script
+    const script = document.createElement('script');
+    script.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit';
+    script.async = true;
+    script.defer = true;
+    script.onload = loadTurnstile;
+    document.head.appendChild(script);
+
+    return () => {
+      if (turnstileWidgetId.current && window.turnstile) {
+        window.turnstile.remove(turnstileWidgetId.current);
+      }
+    };
+  }, [TURNSTILE_SITE_KEY]);
 
   // EmailJS Configuration
   // Replace these with your actual EmailJS credentials from https://www.emailjs.com/
@@ -27,6 +89,14 @@ export default function Contact() {
     setStatus('idle');
 
     try {
+      // Verify Turnstile token
+      if (!turnstileToken) {
+        setStatus('error');
+        setStatusMessage('Please complete the CAPTCHA verification.');
+        setIsLoading(false);
+        return;
+      }
+
       // Prepare template parameters
       const templateParams = {
         from_name: formData.fullname,
@@ -58,6 +128,11 @@ export default function Contact() {
       setStatus('success');
       setStatusMessage('Thank you! Your message has been sent. Check your email for confirmation.');
       setFormData({ fullname: '', email: '', message: '' });
+      setTurnstileToken('');
+      // Reset turnstile widget
+      if (turnstileWidgetId.current && window.turnstile) {
+        window.turnstile.reset(turnstileWidgetId.current);
+      }
     } catch (error) {
       console.error('EmailJS Error:', error);
       setStatus('error');
@@ -218,6 +293,15 @@ export default function Contact() {
                     placeholder="Tell us how we can help you..."
                   />
                 </div>
+
+                {/* Cloudflare Turnstile CAPTCHA */}
+                {TURNSTILE_SITE_KEY ? (
+                  <div className="flex justify-center" ref={turnstileContainerRef} />
+                ) : (
+                  <div className="p-4 bg-yellow-50 border border-yellow-200 rounded-xl text-sm text-yellow-800">
+                    ⚠️ CAPTCHA not configured. Add <code>VITE_TURNSTILE_SITE_KEY</code> to your <code>.env</code> file.
+                  </div>
+                )}
 
                 <button
                   type="submit"
