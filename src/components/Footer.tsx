@@ -18,7 +18,7 @@ export function Footer() {
           </div>
 
           {/* Navigation Column */}
-          <div>
+          {/* <div>
             <h3 className="text-white mb-6 font-medium">Navigation</h3>
             <ul className="space-y-4">
               <li>
@@ -42,10 +42,10 @@ export function Footer() {
                 </Link>
               </li>
             </ul>
-          </div>
+          </div> */}
 
           {/* Get Involved Column */}
-          <div>
+          {/* <div>
             <h3 className="text-white mb-6 font-medium">Get Involved</h3>
             <ul className="space-y-4">
               <li>
@@ -69,10 +69,10 @@ export function Footer() {
                 </Link>
               </li>
             </ul>
-          </div>
+          </div> */}
 
           {/* Transparency Column */}
-          <div>
+          {/* <div>
             <h3 className="text-white mb-6 font-medium">Transparency</h3>
             <ul className="space-y-4">
               <li>
@@ -91,7 +91,7 @@ export function Footer() {
                 </a>
               </li>
             </ul>
-          </div>
+          </div> */}
         </div>
 
         {/* Social Links */}
@@ -151,7 +151,7 @@ export function Footer() {
         </div>
 
         {/* Bottom Bar */}
-        <div className="pt-8 border-t border-gray-800 text-center">
+        {/* <div className="pt-8 border-t border-gray-800 text-center">
           <p className="text-gray-400 text-sm mb-4">
             © Tech Trail Foundation. All rights reserved.
           </p>
@@ -166,7 +166,7 @@ export function Footer() {
               Cookie Policy
             </a>
           </div>
-        </div>
+        </div> */}
       </div>
     </footer>
   );

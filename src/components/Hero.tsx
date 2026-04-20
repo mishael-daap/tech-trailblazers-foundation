@@ -6,15 +6,14 @@ export function Hero() {
       <div className="relative px-6 lg:px-12 pt-16 pb-24">
         <div className="max-w-4xl mx-auto text-center">
           <h1 className="font-serif text-5xl md:text-6xl lg:text-7xl text-gray-900 mb-8 leading-tight" style={{ fontFamily: 'Lora, serif' }}>
-            Empowering Africa's Trailblazers Through Technology
+            Welcome to Tech Trailblazers where innovation meets community!
           </h1>
           <p className="text-lg md:text-xl text-gray-600 mb-12 max-w-2xl mx-auto leading-relaxed">
-            We equip West African professionals and communities with digital skills, inclusive 
-            opportunities, and collaborative spaces to dream, build, and lead with technology.
+          We are a vibrant, inclusive community of Salesforce professionals across West Africa, united by our passion for technology and a shared vision of growth.
           </p>
-          <button className="bg-gray-900 hover:bg-gray-800 text-white px-10 py-4 rounded-full transition-all text-base hover:shadow-lg">
+          {/* <button className="bg-gray-900 hover:bg-gray-800 text-white px-10 py-4 rounded-full transition-all text-base hover:shadow-lg">
             Explore Our Impact
-          </button>
+          </button> */}
         </div>
       </div>
 

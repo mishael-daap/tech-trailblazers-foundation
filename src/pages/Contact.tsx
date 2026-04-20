@@ -1,7 +1,8 @@
 import { Footer } from '../components/Footer';
-import { Mail, Phone, MapPin, Send } from 'lucide-react';
+import { Mail, Phone, MapPin, Send, CheckCircle, Loader2 } from 'lucide-react';
 import { useState } from 'react';
 import type { ChangeEvent, FormEvent } from 'react';
+import emailjs from '@emailjs/browser';
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -9,13 +10,61 @@ export default function Contact() {
     email: '',
     message: ''
   });
+  const [isLoading, setIsLoading] = useState(false);
+  const [status, setStatus] = useState<'idle' | 'success' | 'error'>('idle');
+  const [statusMessage, setStatusMessage] = useState('');
 
-  const handleSubmit = (e: FormEvent) => {
+  // EmailJS Configuration
+  // Replace these with your actual EmailJS credentials from https://www.emailjs.com/
+  const EMAILJS_SERVICE_ID = 'service_0is9d4r';
+  const EMAILJS_TEMPLATE_ID_TO_OWNER = 'template_8051o4t';
+  const EMAILJS_TEMPLATE_ID_TO_USER = 'template_6t2h9b4';
+  const EMAILJS_PUBLIC_KEY = 'S2lNwfKk6qqxjSWti';
+
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    // Handle form submission here
-    console.log('Form submitted:', formData);
-    // Reset form
-    setFormData({ fullname: '', email: '', message: '' });
+    setIsLoading(true);
+    setStatus('idle');
+
+    try {
+      // Prepare template parameters
+      const templateParams = {
+        from_name: formData.fullname,
+        from_email: formData.email,
+        message: formData.message,
+        to_email: 'themishaeldaap@gmail.com', // Your email address
+        reply_to: formData.email,
+      };
+
+      // Send notification email to owner
+      const ownerEmailPromise = emailjs.send(
+        EMAILJS_SERVICE_ID,
+        EMAILJS_TEMPLATE_ID_TO_OWNER,
+        templateParams,
+        EMAILJS_PUBLIC_KEY
+      );
+
+      // Send confirmation email to user
+      const userEmailPromise = emailjs.send(
+        EMAILJS_SERVICE_ID,
+        EMAILJS_TEMPLATE_ID_TO_USER,
+        templateParams,
+        EMAILJS_PUBLIC_KEY
+      );
+
+      // Wait for both emails to be sent
+      await Promise.all([ownerEmailPromise, userEmailPromise]);
+
+      setStatus('success');
+      setStatusMessage('Thank you! Your message has been sent. Check your email for confirmation.');
+      setFormData({ fullname: '', email: '', message: '' });
+    } catch (error) {
+      console.error('EmailJS Error:', error);
+      setStatus('error');
+      setStatusMessage('Something went wrong. Please try again later.');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -35,7 +84,7 @@ export default function Contact() {
             We'd Love to Hear From You
           </h1>
           <p className="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">
-            Whether you have a question about our programs, want to get involved, or just want to say hello, 
+            Whether you have a question about our programs, want to get involved, or just want to say hello,
             we're here to help and answer any questions you may have.
           </p>
         </div>
@@ -51,7 +100,7 @@ export default function Contact() {
                 Contact Information
               </h2>
               <p className="text-lg text-gray-600 mb-12 leading-relaxed">
-                Reach out to us through any of these channels. Our team is ready to assist you 
+                Reach out to us through any of these channels. Our team is ready to assist you
                 with your inquiries and provide the support you need.
               </p>
 
@@ -93,27 +142,6 @@ export default function Contact() {
                   </div>
                 </div>
               </div>
-
-              {/* Office Hours */}
-              <div className="mt-12 bg-white p-8 rounded-2xl">
-                <h3 className="font-serif text-xl text-gray-900 mb-4" style={{ fontFamily: 'Lora, serif' }}>
-                  Office Hours
-                </h3>
-                <div className="space-y-2 text-gray-600">
-                  <div className="flex justify-between">
-                    <span>Monday - Friday</span>
-                    <span className="font-medium">9:00 AM - 5:00 PM WAT</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span>Saturday</span>
-                    <span className="font-medium">10:00 AM - 2:00 PM WAT</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span>Sunday</span>
-                    <span className="font-medium">Closed</span>
-                  </div>
-                </div>
-              </div>
             </div>
 
             {/* Contact Form */}
@@ -124,6 +152,20 @@ export default function Contact() {
               <p className="text-gray-600 mb-8">
                 Fill out the form below and we'll get back to you as soon as possible.
               </p>
+
+              {/* Status Message */}
+              {status !== 'idle' && (
+                <div className={`mb-6 p-4 rounded-xl flex items-start gap-3 ${
+                  status === 'success' ? 'bg-green-50 text-green-800' : 'bg-red-50 text-red-800'
+                }`}>
+                  {status === 'success' ? (
+                    <CheckCircle className="w-5 h-5 flex-shrink-0 mt-0.5" />
+                  ) : (
+                    <span className="text-xl flex-shrink-0">⚠</span>
+                  )}
+                  <p className="text-sm">{statusMessage}</p>
+                </div>
+              )}
 
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div>
@@ -137,7 +179,8 @@ export default function Contact() {
                     value={formData.fullname}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                    disabled={isLoading}
+                    className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all disabled:bg-gray-100"
                     placeholder="John Doe"
                   />
                 </div>
@@ -153,7 +196,8 @@ export default function Contact() {
                     value={formData.email}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                    disabled={isLoading}
+                    className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all disabled:bg-gray-100"
                     placeholder="john@example.com"
                   />
                 </div>
@@ -168,18 +212,29 @@ export default function Contact() {
                     value={formData.message}
                     onChange={handleChange}
                     required
+                    disabled={isLoading}
                     rows={6}
-                    className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all resize-none"
+                    className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all resize-none disabled:bg-gray-100"
                     placeholder="Tell us how we can help you..."
                   />
                 </div>
 
                 <button
                   type="submit"
-                  className="w-full bg-gray-900 hover:bg-gray-800 text-white px-8 py-4 rounded-full transition-all inline-flex items-center justify-center gap-2"
+                  disabled={isLoading}
+                  className="w-full bg-gray-900 hover:bg-gray-800 text-white px-8 py-4 rounded-full transition-all inline-flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed"
                 >
-                  Send Message
-                  <Send size={18} />
+                  {isLoading ? (
+                    <>
+                      <Loader2 className="w-5 h-5 animate-spin" />
+                      Sending...
+                    </>
+                  ) : (
+                    <>
+                      Send Message
+                      <Send size={18} />
+                    </>
+                  )}
                 </button>
               </form>
             </div>
@@ -205,7 +260,7 @@ export default function Contact() {
                 How can I get involved with your programs?
               </h3>
               <p className="text-gray-600 leading-relaxed">
-                You can get involved by attending our events, volunteering, or partnering with us. 
+                You can get involved by attending our events, volunteering, or partnering with us.
                 Visit our Get Involved page or contact us directly to learn more about current opportunities.
               </p>
             </div>
@@ -215,7 +270,7 @@ export default function Contact() {
                 Are your programs free to attend?
               </h3>
               <p className="text-gray-600 leading-relaxed">
-                Yes, most of our programs are free and open to all. We believe in removing barriers 
+                Yes, most of our programs are free and open to all. We believe in removing barriers
                 to technology education and ensuring everyone has access to learning opportunities.
               </p>
             </div>
@@ -225,7 +280,7 @@ export default function Contact() {
                 Do you offer certification programs?
               </h3>
               <p className="text-gray-600 leading-relaxed">
-                Yes, we offer various certification pathways in partnership with industry leaders. 
+                Yes, we offer various certification pathways in partnership with industry leaders.
                 Contact us to learn about current certification programs and eligibility requirements.
               </p>
             </div>
@@ -235,26 +290,11 @@ export default function Contact() {
                 How can my organization partner with you?
               </h3>
               <p className="text-gray-600 leading-relaxed">
-                We welcome partnerships with organizations that share our mission. Reach out through 
+                We welcome partnerships with organizations that share our mission. Reach out through
                 our contact form or email us directly to discuss partnership opportunities.
               </p>
             </div>
           </div>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="py-24 px-6 lg:px-12 bg-gradient-to-br from-blue-600 to-blue-800">
-        <div className="max-w-4xl mx-auto text-center text-white">
-          <h2 className="font-serif text-4xl md:text-5xl mb-6 leading-tight" style={{ fontFamily: 'Lora, serif' }}>
-            Ready to make an impact?
-          </h2>
-          <p className="text-xl text-blue-100 mb-10 leading-relaxed">
-            Join us in empowering Africa's digital future through technology education and community collaboration.
-          </p>
-          <button className="bg-white text-gray-900 hover:bg-gray-100 px-10 py-4 rounded-full transition-all">
-            Explore Opportunities
-          </button>
         </div>
       </section>
 

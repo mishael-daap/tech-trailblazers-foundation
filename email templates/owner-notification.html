@@ -1,0 +1,54 @@
+<div style="font-family: 'Lora', Georgia, serif; background-color: #ffffff; padding: 40px 20px;">
+  <div style="max-width: 600px; margin: 0 auto; background-color: #ffffff; border: 1px solid #e5e7eb; border-radius: 16px; overflow: hidden;">
+
+    <!-- Header -->
+    <div style="background-color: #f9fafb; padding: 30px; text-align: center; border-bottom: 1px solid #e5e7eb;">
+      <h1 style="margin: 0; color: #111827; font-size: 24px; font-weight: 600;">New Contact Form Submission</h1>
+      <p style="margin: 8px 0 0 0; color: #6b7280; font-size: 14px; font-family: system-ui, sans-serif;">Tech Trailblazers Website</p>
+    </div>
+
+    <!-- Content -->
+    <div style="padding: 40px 30px;">
+      <p style="color: #374151; font-size: 16px; line-height: 1.6; margin: 0 0 24px 0; font-family: system-ui, sans-serif;">
+        A new message has been received from <strong style="color: #111827;">{{from_name}}</strong>. Please review and respond at your earliest convenience.
+      </p>
+
+      <!-- Message Box -->
+      <div style="background-color: #fefce8; border-left: 4px solid #eab308; padding: 24px; margin: 24px 0; border-radius: 0 8px 8px 0;">
+        <p style="margin: 0 0 12px 0; color: #92400e; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; font-family: system-ui, sans-serif; font-weight: 600;">Message</p>
+        <p style="margin: 0; color: #111827; font-size: 16px; line-height: 1.6; font-family: 'Lora', Georgia, serif;">{{message}}</p>
+      </div>
+
+      <!-- Contact Details -->
+      <div style="background-color: #f9fafb; border-radius: 8px; padding: 24px; margin-top: 24px;">
+        <p style="margin: 0 0 16px 0; color: #374151; font-size: 14px; font-weight: 600; font-family: system-ui, sans-serif;">Sender Details</p>
+
+        <table style="width: 100%; border-collapse: collapse;">
+          <tr>
+            <td style="padding: 8px 0; color: #6b7280; font-size: 14px; width: 80px; font-family: system-ui, sans-serif;">Name:</td>
+            <td style="padding: 8px 0; color: #111827; font-size: 14px; font-family: system-ui, sans-serif;">{{from_name}}</td>
+          </tr>
+          <tr>
+            <td style="padding: 8px 0; color: #6b7280; font-size: 14px; font-family: system-ui, sans-serif;">Email:</td>
+            <td style="padding: 8px 0; color: #111827; font-size: 14px; font-family: system-ui, sans-serif;">
+              <a href="mailto:{{from_email}}" style="color: #2563eb; text-decoration: none;">{{from_email}}</a>
+            </td>
+          </tr>
+        </table>
+      </div>
+
+      <!-- CTA Button -->
+      <div style="text-align: center; margin-top: 32px;">
+        <a href="mailto:{{from_email}}" style="display: inline-block; background-color: #111827; color: #ffffff; text-decoration: none; padding: 14px 32px; border-radius: 50px; font-size: 14px; font-weight: 500; font-family: system-ui, sans-serif;">Reply to {{from_name}}</a>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div style="background-color: #f9fafb; padding: 20px 30px; text-align: center; border-top: 1px solid #e5e7eb;">
+      <p style="margin: 0; color: #9ca3af; font-size: 12px; font-family: system-ui, sans-serif;">
+        This email was sent from the Tech Trailblazers contact form
+      </p>
+    </div>
+
+  </div>
+</div>
