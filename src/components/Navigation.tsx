@@ -15,7 +15,7 @@ export function Navigation() {
 
         {/* Desktop Navigation */}
         <div className="hidden md:flex items-center gap-10">
-          <Link to="/about" className="text-gray-700 hover:text-gray-900 transition-colors text-lg ">
+          {/* <Link to="/about" className="text-gray-700 hover:text-gray-900 transition-colors text-lg ">
             About
           </Link>
           <Link to="/events" className="text-gray-700 hover:text-gray-900 transition-colors text-lg ">
@@ -26,13 +26,13 @@ export function Navigation() {
           </Link>
           <Link to="/gallery" className="text-gray-700 hover:text-gray-900 transition-colors text-lg ">
             Gallery
-          </Link>
+          </Link> */}
           <Link to="/contact" className="text-gray-700 hover:text-gray-900 transition-colors text-lg ">
             Contact
           </Link>
-          <button className="bg-gray-900 hover:bg-gray-800 text-white px-8 py-3.5 rounded-full transition-colors text-lg font-medium">
+          <Link to={"/contact"} className="bg-gray-900 hover:bg-gray-800 text-white px-8 py-3.5 rounded-full transition-colors text-lg font-medium">
             Get Involved
-          </button>
+          </Link>
         </div>
 
         {/* Mobile Menu Button */}
