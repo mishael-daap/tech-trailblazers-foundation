@@ -1,18 +1,20 @@
+# syntax=docker/dockerfile:1
+
 FROM node:20-alpine AS builder
 
 WORKDIR /app
 
+# Enable pnpm via corepack.
 RUN corepack enable
 
 COPY package.json pnpm-lock.yaml ./
 RUN pnpm install --frozen-lockfile
 
+# Build args for Vite env vars (must be passed from Render dashboard)
+ARG VITE_TURNSTILE_SITE_KEY
+ENV VITE_TURNSTILE_SITE_KEY=$VITE_TURNSTILE_SITE_KEY
+
 COPY . .
-
-# Copy the secret .env file Render injects
-RUN --mount=type=secret,id=VITE_TURNSTILE_SITE_KEY \
-    cp /etc/secrets/.env .env
-
 RUN pnpm build
 
 FROM nginx:1.27-alpine AS runner
