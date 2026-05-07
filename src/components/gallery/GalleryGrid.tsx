@@ -1,97 +1,171 @@
-import { useState } from 'react';
-
-interface GalleryItem {
-  id: number;
-  imageUrl: string;
-  caption: string;
-}
-
-const galleryItems: GalleryItem[] = [
-  {
-    id: 1,
-    imageUrl: "https://images.unsplash.com/photo-1528901166007-3784c7dd3653?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxBZnJpY2FuJTIwdGVjaCUyMHByb2Zlc3Npb25hbHMlMjBjb2Rpbmd8ZW58MXx8fHwxNzc1OTc3MDM2fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
-    caption: "Tech professionals collaborating on innovative solutions"
-  },
-  {
-    id: 2,
-    imageUrl: "https://images.unsplash.com/photo-1582638423482-a90640357638?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxBZnJpY2FuJTIwc3R1ZGVudHMlMjB0ZWNobm9sb2d5JTIwd29ya3Nob3B8ZW58MXx8fHwxNzc1OTc3MDM2fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
-    caption: "Students engaged in hands-on technology workshops"
-  },
-  {
-    id: 3,
-    imageUrl: "https://images.unsplash.com/photo-1771412198236-c2a5a5778fb8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxBZnJpY2FuJTIwY29tbXVuaXR5JTIwdGVjaCUyMGVkdWNhdGlvbnxlbnwxfHx8fDE3NzU5NzcwMzd8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
-    caption: "Community tech education bringing digital skills to all"
-  },
-  {
-    id: 4,
-    imageUrl: "https://images.unsplash.com/photo-1675250719891-37d4747c9e3d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxBZnJpY2FuJTIwd29tZW4lMjBjb2RpbmclMjBjb21wdXRlcnxlbnwxfHx8fDE3NzU5NzcwMzh8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
-    caption: "Women in tech leading the digital transformation"
-  },
-  {
-    id: 5,
-    imageUrl: "https://images.unsplash.com/photo-1633443315529-84fe2415585f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx0ZWNoJTIwbWVudG9yc2hpcCUyMEFmcmljYSUyMHlvdXRofGVufDF8fHx8MTc3NTk3NzAzOHww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
-    caption: "Mentorship programs connecting youth with industry experts"
-  },
-  {
-    id: 6,
-    imageUrl: "https://images.unsplash.com/photo-1594098882270-66ce9399b040?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxBZnJpY2FuJTIwdGVhbSUyMGNvbGxhYm9yYXRpb24lMjBvZmZpY2V8ZW58MXx8fHwxNzc1OTc3MDM5fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
-    caption: "Team collaboration driving innovation and growth"
-  },
-  {
-    id: 7,
-    imageUrl: "https://images.unsplash.com/photo-1666281134747-caa676fc2201?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxBZnJpY2FuJTIwY2xhc3Nyb29tJTIwZGlnaXRhbCUyMGxlYXJuaW5nfGVufDF8fHx8MTc3NTk3NzAzOXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
-    caption: "Digital learning transforming education across Africa"
-  },
-  {
-    id: 8,
-    imageUrl: "https://images.unsplash.com/photo-1710770563074-6d9cc0d3e338?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxBZnJpY2FuJTIwZGV2ZWxvcGVyJTIwbGFwdG9wJTIwcHJvZ3JhbW1pbmd8ZW58MXx8fHwxNzc1OTc3MDM5fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
-    caption: "Developers building the future of African technology"
-  },
-];
+import { useState, useEffect } from 'react';
+import { galleryImages } from '../../utils/imageImports';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 export function GalleryGrid() {
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(20);
+
+  // Responsive items per page
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 768) {
+        setItemsPerPage(8);
+      } else if (window.innerWidth < 1024) {
+        setItemsPerPage(12);
+      } else {
+        setItemsPerPage(20);
+      }
+    };
+
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  const totalPages = Math.ceil(galleryImages.length / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const currentImages = galleryImages.slice(startIndex, endIndex);
+
+  const goToPage = (page: number) => {
+    if (page >= 1 && page <= totalPages) {
+      setCurrentPage(page);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
+
+  const goToPrevious = () => {
+    if (currentPage > 1) {
+      goToPage(currentPage - 1);
+    }
+  };
+
+  const goToNext = () => {
+    if (currentPage < totalPages) {
+      goToPage(currentPage + 1);
+    }
+  };
+
+  // Generate page numbers to show
+  const getPageNumbers = () => {
+    const pages = [];
+    const maxVisiblePages = 5;
+
+    if (totalPages <= maxVisiblePages) {
+      for (let i = 1; i <= totalPages; i++) {
+        pages.push(i);
+      }
+    } else {
+      if (currentPage <= 3) {
+        for (let i = 1; i <= 4; i++) {
+          pages.push(i);
+        }
+        pages.push('...');
+        pages.push(totalPages);
+      } else if (currentPage >= totalPages - 2) {
+        pages.push(1);
+        pages.push('...');
+        for (let i = totalPages - 3; i <= totalPages; i++) {
+          pages.push(i);
+        }
+      } else {
+        pages.push(1);
+        pages.push('...');
+        for (let i = currentPage - 1; i <= currentPage + 1; i++) {
+          pages.push(i);
+        }
+        pages.push('...');
+        pages.push(totalPages);
+      }
+    }
+    return pages;
+  };
+
   return (
-    <section className="py-12 px-6 lg:px-12 pb-24">
-      <div className="max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {galleryItems.map((item) => (
-            <GalleryCard key={item.id} item={item} />
-          ))}
+    <>
+      <section className="py-12 px-6 lg:px-12 pb-24">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {currentImages.map((imageUrl, index) => (
+              <GalleryCard key={`${imageUrl}-${index}`} imageUrl={imageUrl} />
+            ))}
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
+
+      {/* Pagination Controls */}
+      {totalPages > 1 && (
+        <section className="py-12 px-6 lg:px-12 bg-gray-50">
+          <div className="max-w-7xl mx-auto">
+            <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+              {/* Page Info */}
+              <p className="text-gray-600 text-sm">
+                Showing {startIndex + 1}-{Math.min(endIndex, galleryImages.length)} of {galleryImages.length} images
+              </p>
+
+              {/* Pagination Buttons */}
+              <div className="flex items-center gap-2">
+                {/* Previous Button */}
+                <button
+                  onClick={goToPrevious}
+                  disabled={currentPage === 1}
+                  className="p-2 rounded-lg border border-gray-300 hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                  aria-label="Previous page"
+                >
+                  <ChevronLeft size={20} />
+                </button>
+
+                {/* Page Numbers */}
+                <div className="flex items-center gap-1">
+                  {getPageNumbers().map((page, index) => (
+                    <button
+                      key={index}
+                      onClick={() => typeof page === 'number' && goToPage(page)}
+                      disabled={page === '...'}
+                      className={`w-10 h-10 rounded-lg font-medium transition-colors ${
+                        page === currentPage
+                          ? 'bg-gray-900 text-white'
+                          : 'border border-gray-300 hover:bg-gray-100 text-gray-700'
+                      } ${page === '...' ? 'cursor-default' : ''}`}
+                    >
+                      {page}
+                    </button>
+                  ))}
+                </div>
+
+                {/* Next Button */}
+                <button
+                  onClick={goToNext}
+                  disabled={currentPage === totalPages}
+                  className="p-2 rounded-lg border border-gray-300 hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                  aria-label="Next page"
+                >
+                  <ChevronRight size={20} />
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
+    </>
   );
 }
 
-function GalleryCard({ item }: { item: GalleryItem }) {
+function GalleryCard({ imageUrl }: { imageUrl: string }) {
   const [isHovered, setIsHovered] = useState(false);
 
   return (
-    <div 
+    <div
       className="relative overflow-hidden rounded-2xl group cursor-pointer aspect-[4/3]"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      {/* Image */}
       <img
-        src={item.imageUrl}
-        alt={item.caption}
+        src={imageUrl}
+        alt="Gallery image"
         className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
       />
-
-      {/* Overlay - Always visible on mobile (lg:hidden), hover on desktop */}
-      <div 
-        className={`
-          absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent
-          flex items-end p-6
-          lg:opacity-0 lg:group-hover:opacity-100
-          transition-opacity duration-300
-        `}
-      >
-        <p className="text-white text-lg leading-relaxed">
-          {item.caption}
-        </p>
-      </div>
     </div>
   );
 }

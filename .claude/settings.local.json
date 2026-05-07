@@ -2,7 +2,10 @@
   "permissions": {
     "allow": [
       "Bash(pnpm add:*)",
-      "Bash(git remote *)"
+      "Bash(git remote *)",
+      "Bash(Get-ChildItem -Path \"src\\\\assets\\\\wad-pictures\\\\LIVE EVENT PHOTOGRAPHY\" -Recurse)",
+      "Bash(Measure-Object)",
+      "Bash(Select-Object -ExpandProperty Count)"
     ]
   }
 }
