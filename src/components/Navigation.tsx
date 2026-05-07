@@ -23,10 +23,10 @@ export function Navigation() {
           </Link>
           <Link to="/resources" className="text-gray-700 hover:text-gray-900 transition-colors text-lg ">
             Resources
-          </Link>
+          </Link> */}
           <Link to="/gallery" className="text-gray-700 hover:text-gray-900 transition-colors text-lg ">
             Gallery
-          </Link> */}
+          </Link>
           <Link to="/contact" className="text-gray-700 hover:text-gray-900 transition-colors text-lg ">
             Contact
           </Link>

@@ -1,4 +1,4 @@
-const imageModules = import.meta.glob('../assets/wad-pictures/LIVE EVENT PHOTOGRAPHY/*.{jpg,JPG,jpeg,JPEG,png,PNG}', {
+const imageModules = import.meta.glob('../assets/wad-pictures/*.{webp,WEBP,png,PNG,jpg,JPG,jpeg,JPEG}', {
   eager: true,
   as: 'url'
 });
