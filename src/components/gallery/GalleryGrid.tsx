@@ -153,13 +153,10 @@ export function GalleryGrid() {
 }
 
 function GalleryCard({ imageUrl }: { imageUrl: string }) {
-  const [isHovered, setIsHovered] = useState(false);
 
   return (
     <div
       className="relative overflow-hidden rounded-2xl group cursor-pointer aspect-[4/3]"
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
     >
       <img
         src={imageUrl}

@@ -6,8 +6,9 @@ import Contact from './pages/Contact';
 import Events from './pages/Events';
 import Resources from './pages/Resources';
 import { Navigation } from './components/Navigation';
+import { JSX } from 'react';
 
-const RootLayout = () => (
+const RootLayout = (): JSX.Element => (
   <>
     <Navigation />
     <Outlet />
@@ -16,7 +17,7 @@ const RootLayout = () => (
 
 const router = createBrowserRouter([
   {
-    path: "/",
+    path: '/',
     element: <RootLayout />,
     children: [
       {
@@ -24,29 +25,29 @@ const router = createBrowserRouter([
         element: <Home />,
       },
       {
-        path: "about",
+        path: 'about',
         element: <About />,
       },
       {
-        path: "gallery",
+        path: 'gallery',
         element: <Gallery />,
       },
       {
-        path: "contact",
+        path: 'contact',
         element: <Contact />,
       },
       {
-        path: "events",
+        path: 'events',
         element: <Events />,
       },
       {
-        path: "resources",
+        path: 'resources',
         element: <Resources />,
       },
     ],
   },
 ]);
 
-export default function App() {
+export default function App(): JSX.Element {
   return <RouterProvider router={router} />;
 }

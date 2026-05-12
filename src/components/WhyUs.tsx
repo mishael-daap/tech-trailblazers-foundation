@@ -1,4 +1,4 @@
-import { Heart, Briefcase, Users, Globe, ArrowRight } from 'lucide-react';
+import { Heart, Briefcase, Users, ArrowRight } from 'lucide-react';
 
 export function WhyUs() {
   return (
