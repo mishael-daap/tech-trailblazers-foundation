@@ -1,5 +1,8 @@
 {
   "name": "tech-trailblazers-website",
+  "pnpm": {
+    "onlyBuiltDependencies": ["esbuild"]
+  },
   "private": true,
   "version": "0.0.0",
   "type": "module",

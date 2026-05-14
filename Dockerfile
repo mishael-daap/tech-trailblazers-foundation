@@ -7,7 +7,7 @@ WORKDIR /app
 # Enable pnpm via corepack.
 RUN corepack enable
 
-COPY package.json pnpm-lock.yaml ./
+COPY package.json pnpm-lock.yaml .npmrc ./
 RUN pnpm install --frozen-lockfile
 
 # Build args for Vite env vars (must be passed from Render dashboard)
