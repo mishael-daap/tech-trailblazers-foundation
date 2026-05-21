@@ -1,5 +1,6 @@
 import { GalleryGrid } from '../components/gallery/GalleryGrid';
 import { Footer } from '../components/Footer';
+import GalleryCarousel from '../components/GalleryCarousel';
 
 export default function Gallery() {
   return (
@@ -15,6 +16,9 @@ export default function Gallery() {
           </p>
         </div>
       </section>
+
+      {/* Image Carousel */}
+      <GalleryCarousel />
 
       <GalleryGrid />
       <Footer />
