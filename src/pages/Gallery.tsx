@@ -6,7 +6,7 @@ export default function Gallery() {
   return (
     <div className="min-h-screen bg-white">
       {/* Hero Section */}
-      <section className="pt-32 pb-16 px-6 lg:px-12">
+      <section className="pt-32 px-6 lg:px-12">
         <div className="max-w-6xl mx-auto text-center">
           <h1 className="font-serif text-5xl md:text-6xl lg:text-7xl text-gray-900 mb-6" style={{ fontFamily: 'Lora, serif' }}>
             Our Gallery
