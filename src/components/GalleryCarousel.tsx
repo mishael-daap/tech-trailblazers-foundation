@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import { useState,  } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
 const images = [
@@ -63,27 +63,24 @@ const images = [
 ];
 
 export default function GalleryCarousel() {
-  const [activeIndex, setActiveIndex] = useState(0);
+  const [activeIndex, setActiveIndex] = useState<number>(0);
 
   const previous = () => {
-    setActiveIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
+    setActiveIndex((prev: number) => (prev === 0 ? images.length - 1 : prev - 1));
   };
 
   const next = () => {
-    setActiveIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1));
+    setActiveIndex((prev: number) => (prev === images.length - 1 ? 0 : prev + 1));
   };
 
-  // Computes card layout placement to create an elegant layered overlapping visual
   const getCardStyles = (index: number) => {
     let offset = index - activeIndex;
 
-    // Handle wrap-around array mathematics for infinite continuous looping
     if (offset < -images.length / 2) offset += images.length;
     if (offset > images.length / 2) offset -= images.length;
 
     const absOffset = Math.abs(offset);
 
-    // Hide cards that are out of immediate field of view
     if (absOffset > 2) {
       return {
         opacity: 0,
@@ -93,7 +90,6 @@ export default function GalleryCarousel() {
       };
     }
 
-    // Elegant placement configurations matching visual depth layers
     let translateX = "0px";
     let scale = 1;
     let zIndex = 30;
@@ -105,7 +101,7 @@ export default function GalleryCarousel() {
       zIndex = 30;
       opacity = 1;
     } else if (offset === 1) {
-      translateX = "260px"; // Tucked slightly behind center card
+      translateX = "260px";
       scale = 0.82;
       zIndex = 20;
       opacity = 0.85;
@@ -115,7 +111,7 @@ export default function GalleryCarousel() {
       zIndex = 20;
       opacity = 0.85;
     } else if (offset === 2) {
-      translateX = "460px"; // Outer layer
+      translateX = "460px";
       scale = 0.68;
       zIndex = 10;
       opacity = 0.4;
@@ -126,7 +122,6 @@ export default function GalleryCarousel() {
       opacity = 0.4;
     }
 
-    // Responsive adaptation adjustments for mobile screen widths
     if (typeof window !== "undefined" && window.innerWidth < 768) {
       if (offset === 1) translateX = "70px";
       if (offset === -1) translateX = "-70px";
@@ -145,7 +140,6 @@ export default function GalleryCarousel() {
     <section className="relative overflow-hidden bg-white py-24">
       <div className="mx-auto flex max-w-7xl flex-col items-center px-4">
         
-        {/* Carousel View Container */}
         <div className="relative flex h-[550px] w-full items-center justify-center">
           {images.map((image, idx) => {
             const styles = getCardStyles(idx);
@@ -163,14 +157,12 @@ export default function GalleryCarousel() {
                   className="h-full w-full object-cover select-none"
                 />
 
-                {/* Shading/Gradient Overlays matching active states */}
                 {isActive ? (
                   <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent transition-opacity duration-500" />
                 ) : (
                   <div className="absolute inset-0 bg-black/15 transition-opacity duration-500" />
                 )}
 
-                {/* Inner Content Text Layer */}
                 <div
                   className={`absolute bottom-0 left-0 right-0 p-8 text-white transition-all duration-500 ${
                     isActive
@@ -190,7 +182,6 @@ export default function GalleryCarousel() {
           })}
         </div>
 
-        {/* Minimal Circle Arrow Navigation Controls */}
         <div className="mt-12 flex items-center gap-3">
           <button
             onClick={previous}
@@ -209,7 +200,6 @@ export default function GalleryCarousel() {
           </button>
         </div>
 
-        {/* Navigation Dots Indicator Timeline */}
         <div className="mt-8 flex items-center gap-2">
           {images.map((_, idx) => (
             <button
