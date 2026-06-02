@@ -1,6 +1,7 @@
-import { GalleryGrid } from '../components/gallery/GalleryGrid';
-import { Footer } from '../components/Footer';
 import GalleryCarousel from '../components/GalleryCarousel';
+import { GallerySection } from '../components/GallerySection';
+import { galleryData } from '../data/galleryData';
+import { Footer } from '../components/Footer';
 
 export default function Gallery() {
   return (
@@ -20,7 +21,11 @@ export default function Gallery() {
       {/* Image Carousel */}
       <GalleryCarousel />
 
-      <GalleryGrid />
+      {/* Structured Gallery Sections */}
+      {galleryData.map((section) => (
+        <GallerySection key={section.title} section={section} />
+      ))}
+
       <Footer />
     </div>
   );
