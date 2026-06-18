@@ -15,9 +15,9 @@ export function Navigation() {
 
         {/* Desktop Navigation */}
         <div className="hidden md:flex items-center gap-10">
-          {/* <Link to="/about" className="text-gray-700 hover:text-gray-900 transition-colors text-lg ">
+          <Link to="/about" className="text-gray-700 hover:text-gray-900 transition-colors text-lg ">
             About
-          </Link> */}
+          </Link>
           <Link to="/events" className="text-gray-700 hover:text-gray-900 transition-colors text-lg ">
             Events
           </Link>

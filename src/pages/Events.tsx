@@ -33,7 +33,7 @@ export default function Events() {
         <div className="max-w-4xl mx-auto text-center">
           <p className="text-sm text-gray-500 uppercase tracking-wide mb-3">Events</p>
           <h1 className="font-serif text-4xl md:text-5xl text-gray-900 mb-4" style={{ fontFamily: 'Lora, serif' }}>
-            Upcoming Community Events
+            Community Events
           </h1>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed">
             Discover workshops, meetups, and community sessions designed to help people learn, collaborate,

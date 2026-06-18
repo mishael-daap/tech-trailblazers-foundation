@@ -22,21 +22,21 @@ export function AboutHero() {
         <div className="grid md:grid-cols-3 gap-6 mt-16">
           <div className="h-80 rounded-2xl overflow-hidden">
             <img
-              src="https://images.unsplash.com/photo-1682617367276-bbacadf73747?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxBZnJpY2FuJTIwY29tbXVuaXR5JTIwZ2F0aGVyaW5nJTIwdGVjaG5vbG9neSUyMHdvcmtzaG9wfGVufDF8fHx8MTc3MDQxNDgxMHww&ixlib=rb-4.1.0&q=80&w=1080"
+              src="https://res.cloudinary.com/dnnmq2woa/image/upload/q_auto/f_auto/v1780383181/IMG_7390_o0b4i3.jpg"
               alt="Community gathering"
               className="w-full h-full object-cover"
             />
           </div>
           <div className="h-80 rounded-2xl overflow-hidden">
             <img
-              src="https://images.unsplash.com/photo-1655102718200-7230a1be8bfc?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxkaXZlcnNlJTIwQWZyaWNhbiUyMHRlYW0lMjBjb2xsYWJvcmF0aW9ufGVufDF8fHx8MTc3MDQxNDgxMHww&ixlib=rb-4.1.0&q=80&w=1080"
-              alt="Team collaboration"
+              src="https://res.cloudinary.com/dnnmq2woa/image/upload/q_auto/f_auto/v1778150299/IMG_7308_vvglgb.jpg"
+              alt="West Africa Dreamin"
               className="w-full h-full object-cover"
             />
           </div>
           <div className="h-80 rounded-2xl overflow-hidden">
             <img
-              src="https://images.unsplash.com/photo-1655720348616-184ae7fad7e3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxBZnJpY2FuJTIwc3R1ZGVudHMlMjBsZWFybmluZyUyMHRlY2hub2xvZ3l8ZW58MXx8fHwxNzcwNDE0ODExfDA&ixlib=rb-4.1.0&q=80&w=1080"
+              src="https://res.cloudinary.com/dnnmq2woa/image/upload/q_auto/f_auto/v1778150023/IMG_7550_zlxpid.jpg"
               alt="Students learning"
               className="w-full h-full object-cover"
             />

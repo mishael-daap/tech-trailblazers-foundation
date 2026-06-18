@@ -1,4 +1,6 @@
-import { TrendingUp, Users, Calendar, Heart, Briefcase } from 'lucide-react';
+import {
+  //  TrendingUp,
+   Users, Calendar, Heart, Briefcase } from 'lucide-react';
 
 export function AboutImpact() {
   const impactAreas = [
@@ -34,12 +36,12 @@ export function AboutImpact() {
     }
   ];
 
-  const metrics = [
-    { value: '2,500+', label: 'Individuals trained and mentored' },
-    { value: '150+', label: 'Community events and regional conferences' },
-    { value: '50+', label: 'Partner organizations and user groups' },
-    { value: '100+', label: 'Social impact and nonprofit projects' }
-  ];
+  // const metrics = [
+  //   { value: '2,500+', label: 'Individuals trained and mentored' },
+  //   { value: '150+', label: 'Community events and regional conferences' },
+  //   { value: '50+', label: 'Partner organizations and user groups' },
+  //   { value: '100+', label: 'Social impact and nonprofit projects' }
+  // ];
 
   const colorClasses: Record<string, string> = {
     blue: 'bg-blue-100 text-blue-600',
@@ -88,7 +90,7 @@ export function AboutImpact() {
       </section>
 
       {/* Metrics Section */}
-      <section className="py-24 px-6 lg:px-12 bg-gradient-to-br from-blue-600 to-blue-800">
+      {/* <section className="py-24 px-6 lg:px-12 bg-gradient-to-br from-blue-600 to-blue-800">
         <div className="max-w-6xl mx-auto">
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
             {metrics.map((metric, index) => (
@@ -113,7 +115,7 @@ export function AboutImpact() {
             </p>
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* CTA Section */}
       <section className="py-24 px-6 lg:px-12 bg-white">
@@ -126,12 +128,12 @@ export function AboutImpact() {
             ways to get involved and make a difference.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button className="bg-gray-900 hover:bg-gray-800 text-white px-10 py-4 rounded-full transition-all">
+            <a href="/contact"><button className="bg-gray-900 hover:bg-gray-800 text-white px-10 py-4 rounded-full transition-all">
               Get Involved
-            </button>
-            <button className="bg-gray-100 hover:bg-gray-200 text-gray-900 px-10 py-4 rounded-full transition-all">
+            </button></a>
+            {/* <button className="bg-gray-100 hover:bg-gray-200 text-gray-900 px-10 py-4 rounded-full transition-all">
               Donate Now
-            </button>
+            </button> */}
           </div>
         </div>
       </section>
